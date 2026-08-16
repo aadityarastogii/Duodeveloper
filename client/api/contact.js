@@ -1,6 +1,6 @@
-const { Resend } = require('resend');
+import { Resend } from 'resend';
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, message: 'Method not allowed.' });
   }
@@ -70,4 +70,4 @@ module.exports = async function handler(req, res) {
       message: 'Something went wrong. Please try again later.',
     });
   }
-};
+}
