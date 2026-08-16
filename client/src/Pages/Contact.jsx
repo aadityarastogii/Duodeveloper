@@ -1,18 +1,66 @@
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import SEO from "../SEO Component/SEO";
 import Navbar from "../common-components/Navbar";
 import Footer from "../common-components/Footer";
 import FloatingParticles from "../common-components/FloatingParticles";
 
+const initialForm = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  service: "",
+  message: "",
+};
+
 export default function Contact() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [formData, setFormData] = useState(initialForm);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitMessage("");
+
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || "/api/contact";
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Unable to send your message.");
+      }
+
+      setSubmitSuccess(true);
+      setSubmitMessage("Your message has been sent successfully. We will contact you soon.");
+      setFormData(initialForm);
+    } catch (error) {
+      setSubmitSuccess(false);
+      setSubmitMessage(error.message || "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const CONTACT_INFO = [
     { icon: "📞", label: "Phone", val: "+91 80815 54740", link: "tel:+918081554740" },
@@ -140,32 +188,32 @@ export default function Contact() {
                   Get Your Free Strategy Session
                 </h3>
                 
-                <form className="space-y-5">
+                <form className="space-y-5" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label className="text-gray-400 text-[10px] mb-2 block uppercase tracking-widest font-bold">First Name</label>
-                      <input type="text" placeholder="Rahul" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] placeholder-gray-600 transition-all" />
+                      <input name="firstName" value={formData.firstName} onChange={handleChange} type="text" placeholder="Rahul" required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] placeholder-gray-600 transition-all" />
                     </div>
                     <div>
                       <label className="text-gray-400 text-[10px] mb-2 block uppercase tracking-widest font-bold">Last Name</label>
-                      <input type="text" placeholder="Patel" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] placeholder-gray-600 transition-all" />
+                      <input name="lastName" value={formData.lastName} onChange={handleChange} type="text" placeholder="Patel" required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] placeholder-gray-600 transition-all" />
                     </div>
                   </div>
                   
                   <div>
                     <label className="text-gray-400 text-[10px] mb-2 block uppercase tracking-widest font-bold">Email Address</label>
-                    <input type="email" placeholder="rahul@business.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] placeholder-gray-600 transition-all" />
+                    <input name="email" value={formData.email} onChange={handleChange} type="email" placeholder="rahul@business.com" required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] placeholder-gray-600 transition-all" />
                   </div>
                   
                   <div>
                     <label className="text-gray-400 text-[10px] mb-2 block uppercase tracking-widest font-bold">Phone Number</label>
-                    <input type="tel" placeholder="+91 98765 43210" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] placeholder-gray-600 transition-all" />
+                    <input name="phone" value={formData.phone} onChange={handleChange} type="tel" placeholder="+91 98765 43210" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] placeholder-gray-600 transition-all" />
                   </div>
                   
                   <div>
                     <label className="text-gray-400 text-[10px] mb-2 block uppercase tracking-widest font-bold">Service Needed</label>
                     <div className="relative">
-                      <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-gray-300 text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] transition-all appearance-none cursor-pointer">
+                      <select name="service" value={formData.service} onChange={handleChange} required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-gray-300 text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] transition-all appearance-none cursor-pointer">
                         <option value="" className="bg-[#060a0d]">Select a service...</option>
                         <option className="bg-[#060a0d]">Website Development</option>
                         <option className="bg-[#060a0d]">Mobile App Development</option>
@@ -173,7 +221,6 @@ export default function Contact() {
                         <option className="bg-[#060a0d]">UI/UX Design</option>
                         <option className="bg-[#060a0d]">SEO & Growth Optimization</option>
                       </select>
-                      {/* Custom dropdown arrow to replace native styling */}
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                       </div>
@@ -182,21 +229,28 @@ export default function Contact() {
                   
                   <div>
                     <label className="text-gray-400 text-[10px] mb-2 block uppercase tracking-widest font-bold">Message</label>
-                    <textarea rows={4} placeholder="Tell us about your business goals..." className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] placeholder-gray-600 transition-all resize-none" />
+                    <textarea name="message" value={formData.message} onChange={handleChange} rows={4} placeholder="Tell us about your business goals..." required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white text-[15px] focus:outline-none focus:border-[#04AAA5] focus:bg-[#04AAA5]/5 focus:ring-1 focus:ring-[#04AAA5] placeholder-gray-600 transition-all resize-none" />
                   </div>
+
+                  {submitMessage && (
+                    <div className={`rounded-xl border px-4 py-3 text-sm ${submitSuccess ? "border-[#04AAA5]/30 bg-[#04AAA5]/10 text-[#88f5ef]" : "border-red-500/30 bg-red-500/10 text-red-200"}`}>
+                      {submitMessage}
+                    </div>
+                  )}
                   
                   <div className="pt-4">
                     <motion.button
                       type="submit"
-                      whileHover={{ scale: 1.02, borderColor: "#fbaf40", boxShadow: "0 0 20px rgba(251, 175, 64, 0.2)" }}
-                      whileTap={{ scale: 0.98 }}
-                      className="group relative w-full px-8 py-4 border-2 border-white/20 text-white font-bold rounded-xl transition-all duration-300 overflow-hidden bg-transparent cursor-pointer tracking-wide"
+                      disabled={isSubmitting}
+                      whileHover={{ scale: isSubmitting ? 1 : 1.02, borderColor: "#fbaf40", boxShadow: "0 0 20px rgba(251, 175, 64, 0.2)" }}
+                      whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                      className="group relative w-full px-8 py-4 border-2 border-white/20 text-white font-bold rounded-xl transition-all duration-300 overflow-hidden bg-transparent cursor-pointer tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
                     >
                       <span className="absolute inset-0 bg-gradient-to-r from-[#04AAA5]/10 to-[#FBB040]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <span className="absolute -top-[2px] -left-[2px] w-4 h-4 border-t-2 border-l-2 border-[#FBB040] opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-tl-xl" />
                       <span className="absolute -bottom-[2px] -right-[2px] w-4 h-4 border-b-2 border-r-2 border-[#FBB040] opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-br-xl" />
                       <span className="absolute -left-full top-0 h-full w-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[35deg] transition-all duration-700 group-hover:left-[150%]" />
-                      <span className="relative z-10">Send Message</span>
+                      <span className="relative z-10">{isSubmitting ? "Sending..." : "Send Message"}</span>
                     </motion.button>
                   </div>
                 </form>
