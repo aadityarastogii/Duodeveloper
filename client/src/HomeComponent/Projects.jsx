@@ -28,6 +28,18 @@ const projects = [
   },
   {
     number: "03",
+    name: "Indraprastha NEET Academy",
+    category: "Education · NEET learning",
+    description:
+      "A NEET preparation platform with structured learning modules, NCERT mastery, practice questions, mock tests, rank prediction, and faculty mentorship.",
+    url: "https://indraprasthaneetacademy.com/",
+    image:
+      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=85",
+    imageAlt: "Students learning together in a classroom",
+    accent: "#79B8F2",
+  },
+  {
+    number: "04",
     name: "FreshCurator",
     category: "Grocery · Delivery platform",
     description:
@@ -62,11 +74,11 @@ export default function Projects() {
           </div>
           <p className="max-w-md text-sm leading-7 text-white/55 sm:text-base">
             A look at digital experiences we have designed and developed across
-            hospitality, retail, and delivery.
+            education, hospitality, retail, and delivery.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {projects.map((project, index) => (
             <motion.article
               key={project.name}
@@ -74,7 +86,7 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.55, delay: index * 0.12 }}
-              className="group overflow-hidden rounded-2xl border border-white/10 bg-white/2.5 transition-colors duration-300 hover:border-white/20 last:sm:col-span-2 last:sm:w-1/2 last:sm:justify-self-center xl:last:col-span-1 xl:last:w-auto"
+              className="group overflow-hidden rounded-2xl border border-white/10 bg-white/2.5 transition-colors duration-300 hover:border-white/20"
             >
               <a
                 href={project.url}
