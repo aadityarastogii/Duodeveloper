@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../common-components/Navbar";
 import HeroSection from "../HomeComponent/HeroSection";
 import Showreel from "../HomeComponent/Showreel";
+import Projects from "../HomeComponent/Projects";
 import Process from "../HomeComponent/Process";
 import WhyUs from "../HomeComponent/WhyUs";
 import CTA from "../HomeComponent/CTA";
@@ -48,6 +49,7 @@ export default function DuodeveloperHome() {
       <Navbar isScrolled={isScrolled} />
       <HeroSection />
       <Showreel />
+      <Projects />
       <Service />
       <Process />
       <WhyUs />

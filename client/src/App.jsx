@@ -11,6 +11,7 @@ import BrandIdentity from './services-components/BrandIdentity'
 import SEOServices from './services-components/SEOservices'
 import BlogHub from './Pages/BlogHub'
 import ProcessPage from './Pages/Process'
+import ProjectsPage from './Pages/Projects'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/process" element={<ProcessPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/bloghub" element={<BlogHub />} />
