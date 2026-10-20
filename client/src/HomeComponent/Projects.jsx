@@ -4,34 +4,36 @@ import { ArrowUpRight, ExternalLink } from "lucide-react";
 const projects = [
   {
     number: "01",
-    name: "HotelHub",
-    category: "Hospitality · Booking",
+    name: "OneCart",
+    category: "E-commerce · Shopping",
     description:
-      "A polished hotel discovery and booking experience for HotelHub Mumbai. Guests can explore curated stays, compare room details, and search by dates and party size.",
-    url: "https://hotelhub-0uaet08.public.builtwithrocket.new/",
+      "An e-commerce platform with product discovery, a customer storefront, admin panel, integrated payments, and an AI chatbot for shopping support.",
+    url: "https://onecart-frontend-gray.vercel.app/login",
+    secondaryUrl: "https://onecart-admin-cyan.vercel.app/",
+    secondaryLabel: "Admin panel",
     image:
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=85",
-    imageAlt: "Luxury hotel pool and resort at dusk",
-    accent: "#D9A86C",
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&q=85",
+    imageAlt: "Customer shopping online",
+    accent: "#79B8F2",
   },
   {
     number: "02",
-    name: "Meridian",
-    category: "E-commerce · Luxury watches",
+    name: "Airbnb",
+    category: "Hospitality · Hotel management",
     description:
-      "An editorial storefront for a premium watch collection, with curated categories, featured timepieces, customer reviews, and a refined brand story.",
-    url: "https://chronos-aether-forge.lovable.app",
+      "A hotel booking platform with room listings, guest reviews, username-and-password authentication, real-location maps, and Razorpay payments.",
+    url: "https://airbnb-pvvx.onrender.com/listings",
     image:
-      "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1200&q=85",
-    imageAlt: "Classic luxury wristwatch close-up",
-    accent: "#C9A96E",
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=85",
+    imageAlt: "Hotel pool and resort at dusk",
+    accent: "#D9A86C",
   },
   {
     number: "03",
-    name: "Indraprastha NEET Academy",
-    category: "Education · NEET learning",
+    name: "Indraprastha",
+    category: "Education · EdTech",
     description:
-      "A NEET preparation platform with structured learning modules, NCERT mastery, practice questions, mock tests, rank prediction, and faculty mentorship.",
+      "A NEET learning platform offering test series, mock tests, video streaming, a doubt support system, and practice sets.",
     url: "https://indraprasthaneetacademy.com/",
     image:
       "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=85",
@@ -40,10 +42,10 @@ const projects = [
   },
   {
     number: "04",
-    name: "FreshCurator",
+    name: "Fresh Curator",
     category: "Grocery · Delivery platform",
     description:
-      "An organic grocery delivery experience built for shoppers and delivery riders, with dedicated buyer, rider, and admin entry points.",
+      "A grocery shopping platform with product discovery, role-based authentication, checkout and order management, payment integration, location and delivery tracking, and a delivery dashboard with assignments.",
     url: "https://fresh-curator-woad.vercel.app/",
     image:
       "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=85",
@@ -73,12 +75,12 @@ export default function Projects() {
             </h2>
           </div>
           <p className="max-w-md text-sm leading-7 text-white/55 sm:text-base">
-            A look at digital experiences we have designed and developed across
-            education, hospitality, retail, and delivery.
+            A look at digital experiences across e-commerce, hospitality,
+            education, and grocery delivery.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           {projects.map((project, index) => (
             <motion.article
               key={project.name}
@@ -132,6 +134,17 @@ export default function Projects() {
                   Explore live project
                   <ExternalLink size={15} />
                 </a>
+                {project.secondaryUrl && (
+                  <a
+                    href={project.secondaryUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-white/65 transition-colors hover:text-white sm:ml-5"
+                  >
+                    {project.secondaryLabel}
+                    <ExternalLink size={15} />
+                  </a>
+                )}
               </div>
             </motion.article>
           ))}

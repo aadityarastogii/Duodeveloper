@@ -18,7 +18,7 @@ export default function ProjectsPage() {
     <main className="relative min-h-screen overflow-hidden bg-black text-white">
       <SEO
         title="Our Projects | DuoDeveloper"
-        description="Explore DuoDeveloper's web and product projects across hospitality, luxury retail, and grocery delivery."
+        description="Explore DuoDeveloper's e-commerce, hotel booking, NEET education, and grocery delivery projects."
       />
       <FloatingParticles />
       <Navbar isScrolled={isScrolled} />
